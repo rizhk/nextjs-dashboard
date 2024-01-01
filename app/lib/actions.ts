@@ -5,27 +5,27 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-const FormSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  content: z.string(),
-  cover: z.instanceof(File, { message: 'Cover is required' }),
-  document: z.instanceof(File, { message: 'Document is required' }),
-  startDate: z.string(),
-  endDate: z.string(),
-});
-const CreateActualityObject = FormSchema.omit({ id: true });
+// const FormSchema = z.object({
+//   id: z.string(),
+//   title: z.string(),
+//   content: z.string(),
+//   cover: z.instanceof(File, { message: 'Cover is required' }),
+//   document: z.instanceof(File, { message: 'Document is required' }),
+//   startDate: z.string(),
+//   endDate: z.string(),
+// });
+// const CreateActualityObject = FormSchema.omit({ id: true });
 
 export async function createActuality(formData: FormData) {
-  const { title, content, cover, document, startDate, endDate } =
-    CreateActualityObject.parse({
-      title: formData.get('title'),
-      content: formData.get('content'),
-      cover: formData.get('cover'),
-      document: formData.get('document'),
-      startDate: formData.get('startDate'),
-      endDate: formData.get('endDate'),
-    });
+  // const { title, content, cover, document, startDate, endDate } =
+  //   CreateActualityObject.parse({
+  //     title: formData.get('title'),
+  //     content: formData.get('content'),
+  //     cover: formData.get('cover'),
+  //     document: formData.get('document'),
+  //     startDate: formData.get('startDate'),
+  //     endDate: formData.get('endDate'),
+  //   });
 
   const response = await fetch(
     process.env.STRAPI_URL + '/api/community-app/actualities',
