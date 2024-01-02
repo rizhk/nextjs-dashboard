@@ -26,12 +26,12 @@ export default async function ActualitesTable({
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      <p>{process.env.STRAPI_URL + actuality?.document?.url}</p>
+                      <p>{actuality?.document?.url}</p>
                       {actuality?.document?.url !== undefined &&
                         actuality?.document?.url && (
                           <Image
                             src={
-                              process.env.STRAPI_URL + actuality?.document?.url
+                              actuality?.document?.url
                             }
                             className="mr-2 rounded-full"
                             width={100}
@@ -104,7 +104,7 @@ export default async function ActualitesTable({
                         actuality?.cover?.url && (
                           <Image
                             src={
-                              process.env.STRAPI_URL + actuality?.cover?.url
+                               actuality?.cover?.url
                             }
                             className="mr-2 rounded-full"
                             width={100}
@@ -125,7 +125,7 @@ export default async function ActualitesTable({
                         actuality?.document?.url && (
                           <Image
                             src={
-                              process.env.STRAPI_URL + actuality?.document?.url
+                              actuality?.document?.url
                             }
                             className="mr-2 rounded-full"
                             width={100}
