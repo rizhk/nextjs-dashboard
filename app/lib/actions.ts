@@ -17,13 +17,12 @@ export async function createActuality(formData: FormData) {
         body: formData,
       },
     );
-
-    revalidatePath('/dashboard/actualites');
-    redirect('/dashboard/actualites');
   } catch (error) {
     console.error('fetch Error:', error);
-    return { message: (error as Error).message };
+    throw new Error((error as Error & { digest?: string }).digest);
   }
+  revalidatePath('/dashboard/actualites');
+  return redirect('/dashboard/actualites');
 }
 export async function deleteActuality(formData: FormData) {
   try {
@@ -38,12 +37,13 @@ export async function deleteActuality(formData: FormData) {
         },
       },
     );
-    revalidatePath('/dashboard/actualites');
-    redirect('/dashboard/actualites');
   } catch (error) {
     console.error('fetch Error:', error);
-    return { message: (error as Error).message };
+    throw new Error((error as Error).message);
   }
+
+  revalidatePath('/dashboard/actualites');
+  redirect('/dashboard/actualites');
 }
 
 export async function editActuality(formData: FormData) {
@@ -60,11 +60,12 @@ export async function editActuality(formData: FormData) {
         body: formData,
       },
     );
-
-    revalidatePath('/dashboard/actualites');
-    redirect('/dashboard/actualites');
+    const data = response.json();
   } catch (error) {
     console.error('fetch Error:', error);
-    return { message: (error as Error).message };
+    throw new Error((error as Error).message);
   }
+
+  revalidatePath('/dashboard/actualites');
+  redirect('/dashboard/actualites');
 }
