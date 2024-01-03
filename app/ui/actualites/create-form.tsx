@@ -92,7 +92,7 @@ export default function Form() {
 
         <div className="mb-4">
           <label htmlFor="document" className="mb-2 block text-sm font-medium">
-            Document
+            Doument
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
