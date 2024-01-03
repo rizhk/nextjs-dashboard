@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     domains: [
       'localhost',
-      'https://lovely-cheese-1cf229bd08.media.strapiapp.com',
+      'lovely-cheese-1cf229bd08.media.strapiapp.com',
     ],
   },
 };
