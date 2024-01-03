@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import {
   CheckIcon,
   ClockIcon,
@@ -12,6 +13,21 @@ import Image from 'next/image';
 import { editActuality } from '@/app/lib/actions';
 
 export default function EditActualityForm({ actuality }: { actuality: any }) {
+  const [startDate, setStartDate] = useState(
+    new Date(actuality.startDate).toISOString().slice(0, 10),
+  );
+  const [endDate, setEndDate] = useState(
+    new Date(actuality.endDate).toISOString().slice(0, 10),
+  );
+
+  const onChangeStartDate = (e: any) => {
+    setStartDate(new Date(e.target.value).toISOString().slice(0, 10));
+  };
+
+  const onChangeEndDate = (e: any) => {
+    setEndDate(new Date(e.target.value).toISOString().slice(0, 10));
+  };
+
   return (
     <form action={editActuality}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -124,8 +140,9 @@ export default function EditActualityForm({ actuality }: { actuality: any }) {
               name="startDate"
               type="date"
               placeholder="Enter Start Date"
-              value={actuality.startDate}
+              value={startDate}
               className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              onChange={onChangeStartDate}
             />
           </div>
         </div>
@@ -142,8 +159,9 @@ export default function EditActualityForm({ actuality }: { actuality: any }) {
               name="endDate"
               type="date"
               placeholder="Enter End Date"
-              value={actuality.endDate}
+              value={endDate}
               className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              onChange={onChangeEndDate}
             />
           </div>
         </div>
