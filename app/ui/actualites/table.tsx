@@ -31,7 +31,7 @@ export default async function ActualitesTable({
                         actuality?.document?.url && (
                           <Image
                             src={
-                              actuality?.document?.url
+                              process.env.STRAPI_URL + actuality?.document?.url
                             }
                             className="mr-2 rounded-full"
                             width={100}
@@ -104,7 +104,7 @@ export default async function ActualitesTable({
                         actuality?.cover?.url && (
                           <Image
                             src={
-                               actuality?.cover?.url
+                              process.env.STRAPI_URL + actuality?.cover?.url
                             }
                             className="mr-2 rounded-full"
                             width={100}
@@ -125,7 +125,7 @@ export default async function ActualitesTable({
                         actuality?.document?.url && (
                           <Image
                             src={
-                              actuality?.document?.url
+                              process.env.STRAPI_URL + actuality?.document?.url
                             }
                             className="mr-2 rounded-full"
                             width={100}
