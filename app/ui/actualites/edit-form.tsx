@@ -1,24 +1,27 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  CheckIcon,
-  ClockIcon,
-  CurrencyDollarIcon,
-  UserCircleIcon,
-} from '@heroicons/react/24/outline';
+
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import Image from 'next/image';
 import { editActuality } from '@/app/lib/actions';
 
 export default function EditActualityForm({ actuality }: { actuality: any }) {
-  const [startDate, setStartDate] = useState(
-    new Date(actuality.startDate).toISOString().slice(0, 10),
-  );
-  const [endDate, setEndDate] = useState(
-    new Date(actuality.endDate).toISOString().slice(0, 10),
-  );
+  const [startDate, setStartDate] = useState(() => {
+    try {
+      return new Date(actuality.startDate).toISOString().slice(0, 10);
+    } catch (error) {
+      return '';
+    }
+  });
+  const [endDate, setEndDate] = useState(() => {
+    try {
+      return new Date(actuality.endDate).toISOString().slice(0, 10);
+    } catch (error) {
+      return '';
+    }
+  });
 
   const onChangeStartDate = (e: any) => {
     setStartDate(new Date(e.target.value).toISOString().slice(0, 10));
@@ -65,10 +68,11 @@ export default function EditActualityForm({ actuality }: { actuality: any }) {
               <textarea
                 id="content"
                 name="content"
-                defaultValue={actuality.content}
                 placeholder="Conent"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              />
+              >
+                {actuality.content}
+              </textarea>
             </div>
           </div>
         </div>
@@ -80,15 +84,17 @@ export default function EditActualityForm({ actuality }: { actuality: any }) {
         </label>
         <div className="relative mt-2 rounded-md">
           <div className="relative">
-            {actuality?.cover?.url !== undefined && actuality?.cover?.url && (
-              <Image
-                src={process.env.STRAPI_URL + actuality?.cover?.url}
-                className="mr-2 rounded-full"
-                width={100}
-                height={100}
-                alt={`${actuality.title}'s profile picture`}
-              />
-            )}
+            {actuality?.cover?.url !== undefined &&
+              process.env.NEXT_PUBLIC_STRAPI_URL !== undefined &&
+              actuality?.cover?.url && (
+                <Image
+                  src={process.env.NEXT_PUBLIC_STRAPI_URL + actuality?.cover?.url}
+                  className="mr-2 rounded-full"
+                  width={100}
+                  height={100}
+                  alt={`${actuality.title}'s profile picture`}
+                />
+              )}
 
             <input
               id="cover"
@@ -108,9 +114,10 @@ export default function EditActualityForm({ actuality }: { actuality: any }) {
         <div className="relative mt-2 rounded-md">
           <div className="relative">
             {actuality?.document?.url !== undefined &&
+              process.env.NEXT_PUBLIC_STRAPI_URL !== undefined &&
               actuality?.document?.url && (
                 <Image
-                  src={process.env.STRAPI_URL + actuality?.document?.url}
+                  src={process.env.NEXT_PUBLIC_STRAPI_URL + actuality?.document?.url}
                   className="mr-2 rounded-full"
                   width={100}
                   height={100}

@@ -86,3 +86,15 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+export interface Actuality {
+  id: string;
+  title: string;
+  content: string;
+  cover: { url: string; [key: string]: any };
+  document: { url: string; [key: string]: any };
+  startDate: string;
+  endDate: string;
+}
+
+export type methodType = 'POST' | 'PUT' | 'DELETE';

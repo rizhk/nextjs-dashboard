@@ -3,6 +3,8 @@ import Link from 'next/link';
 
 import { deleteActuality } from '@/app/lib/actions';
 
+import { Button } from '@/app/ui/button';
+
 export function CreateActuality() {
   return (
     <Link
@@ -30,11 +32,11 @@ export function DeleteActuality({ id }: { id: string }) {
   return (
     <>
       <form action={deleteActuality}>
-        <button className="rounded-md border p-2 hover:bg-gray-100">
+        <Button className="rounded-md border p-2 hover:bg-gray-100"> 
           <input type="hidden" name="id" value={id} />
           <span className="sr-only">Delete</span>
           <TrashIcon className="w-5" />
-        </button>
+        </Button>
       </form>
     </>
   );

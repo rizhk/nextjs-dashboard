@@ -1,47 +1,9 @@
 'use server';
 
-import { z } from 'zod';
-import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-
-const FileSchema = z
-  .unknown()
-  .refine((value) => value instanceof File && value.size > 0, {
-    message: 'File is required',
-  });
-
-const FormSchema = z.object({
-  id: z
-    .string()
-    .refine((value) => value.trim() !== '', {
-      message: 'Cannot be empty or whitespace only',
-    }),
-  title: z
-    .string()
-    .refine((value) => value.trim() !== '', {
-      message: 'Cannot be empty or whitespace only',
-    }),
-  content: z
-    .string()
-    .refine((value) => value.trim() !== '', {
-      message: 'Cannot be empty or whitespace only',
-    }),
-  cover: FileSchema,
-  document: FileSchema,
-  startDate: z
-    .string()
-    .refine((value) => value.trim() !== '', {
-      message: 'Cannot be empty or whitespace only',
-    }), // or use z.date() if you're working with Date objects
-  endDate: z
-    .string()
-    .refine((value) => value.trim() !== '', {
-      message: 'Cannot be empty or whitespace only',
-    }), // or use z.date() if you're working with Date objects
-});
-const CreateActualityObject = FormSchema.omit({ id: true });
-const EditActualityObject = FormSchema;
+import { CreateActualityObject, EditActualityObject } from './validation';
+import { sendActualityRequest } from './api';
 
 export async function createActuality(formData: FormData) {
   const result = CreateActualityObject.safeParse({
@@ -60,16 +22,7 @@ export async function createActuality(formData: FormData) {
   }
 
   try {
-    const response = await fetch(
-      process.env.STRAPI_URL + '/api/community-app/actualities',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-        },
-        body: formData,
-      },
-    );
+    await sendActualityRequest({ formData: formData, method: 'POST' });
   } catch (error) {
     console.error('fetch Error:', error);
     throw new Error((error as Error & { digest?: string }).digest);
@@ -79,17 +32,9 @@ export async function createActuality(formData: FormData) {
 }
 export async function deleteActuality(formData: FormData) {
   try {
-    const id = formData.get('id');
+    const id = new Number(formData.get('id'));
 
-    const response = await fetch(
-      process.env.STRAPI_URL + '/api/community-app/actualities/' + id,
-      {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-        },
-      },
-    );
+    await sendActualityRequest({ method: 'DELETE', id: id.toString() });
   } catch (error) {
     console.error('fetch Error:', error);
     throw new Error((error as Error).message);
@@ -117,20 +62,13 @@ export async function editActuality(formData: FormData) {
   }
 
   try {
-    const id = formData.get('id');
+    const id = new Number(formData.get('id'));
 
-    const response = await fetch(
-      process.env.STRAPI_URL + '/api/community-app/actualities/' + id,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-        },
-        body: formData,
-      },
-    );
-    const data = await response.json();
-    console.log(data);
+    await sendActualityRequest({
+      method: 'PUT',
+      id: id.toString(),
+      formData: formData,
+    });
   } catch (error) {
     console.error('fetch Error:', error);
     throw new Error((error as Error).message);
