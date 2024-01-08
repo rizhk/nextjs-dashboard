@@ -39,8 +39,8 @@ export default function ActualityItemMobile({ actuality }: { actuality: Actualit
         <p>{actuality.endDate}</p>
       </div>
       <div className="flex justify-end gap-2">
-        <UpdateActuality id={actuality.id} />
-        <DeleteActuality id={actuality.id} />
+        <UpdateActuality id={actuality.id? actuality.id : ''} />
+        <DeleteActuality id={actuality.id? actuality.id : ''} />
       </div>
     </div>
   </div>

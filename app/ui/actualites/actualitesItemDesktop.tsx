@@ -49,16 +49,14 @@ export default function ActualityItemDesktop({
         </div>
       </td>
       <td className="whitespace-nowrap px-3 py-3">
-        {formatDateToLocal(actuality.startDate)} -{' '}
-        {formatDateToLocal(actuality.endDate)}
+        {formatDateToLocal(actuality.startDate? actuality.startDate: '')} -{' '}
+        {formatDateToLocal(actuality.endDate? actuality.endDate: '')}
       </td>
-      <td className="whitespace-nowrap px-3 py-3">
-        {/* <InvoiceStatus status={actuality.status} /> */}
-      </td>
+
       <td className="whitespace-nowrap py-3 pl-6 pr-3">
         <div className="flex justify-end gap-3">
-          <UpdateActuality id={actuality.id} />
-          <DeleteActuality id={actuality.id} />
+          <UpdateActuality id={actuality.id ? actuality.id : ''} />
+          <DeleteActuality id={actuality.id ? actuality.id : ''} />
         </div>
       </td>
     </tr>

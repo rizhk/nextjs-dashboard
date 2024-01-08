@@ -28,7 +28,7 @@ export async function createActuality(formData: FormData) {
     throw new Error((error as Error & { digest?: string }).digest);
   }
   revalidatePath('/dashboard/actualites');
-  return redirect('/dashboard/actualites');
+  redirect('/dashboard/actualites');
 }
 export async function deleteActuality(formData: FormData) {
   try {

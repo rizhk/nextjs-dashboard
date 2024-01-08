@@ -11,7 +11,7 @@ export const formatDateToLocal = (
   dateStr: string,
   locale: string = 'en-US',
 ) => {
-  const date = new Date(dateStr);
+  const date = dateStr ? new Date(dateStr) : new Date();
   const options: Intl.DateTimeFormatOptions = {
     day: 'numeric',
     month: 'short',
